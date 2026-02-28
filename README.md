@@ -33,50 +33,6 @@ npm run dev
 npm run build
 ```
 
----
-
-## ✦ Folder Structure
-
-```
-portfolio/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── assets/
-│   │   └── profile.jpg        ← YOUR PHOTO HERE
-│   ├── components/
-│   │   ├── Cursor.jsx          Custom animated cursor
-│   │   ├── Cursor.module.css
-│   │   ├── Navbar.jsx          Sticky nav with scroll effect
-│   │   ├── Navbar.module.css
-│   │   ├── Hero.jsx            Full-screen hero with your image
-│   │   ├── Hero.module.css
-│   │   ├── About.jsx           About section with stats
-│   │   ├── About.module.css
-│   │   ├── Work.jsx            Project cards grid
-│   │   ├── Work.module.css
-│   │   ├── Services.jsx        Services grid
-│   │   ├── Services.module.css
-│   │   ├── Testimonial.jsx     Client quotes
-│   │   ├── Testimonial.module.css
-│   │   ├── Contact.jsx         Contact form
-│   │   ├── Contact.module.css
-│   │   ├── Footer.jsx
-│   │   └── Footer.module.css
-│   ├── hooks/
-│   │   └── useReveal.js        Scroll reveal hook
-│   ├── App.jsx
-│   ├── index.css               Global styles & CSS variables
-│   └── main.jsx
-├── index.html
-├── vite.config.js
-└── package.json
-```
-
----
-
-## ✦ Customisation
-
 ### Personal Info
 Edit text content directly in each component file.
 
