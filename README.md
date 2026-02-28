@@ -1,4 +1,4 @@
-# Portfolio — Alex Marlowe
+# Portfolio — Rojesh Pradhananga
 
 A dark luxury editorial portfolio built with **React + Vite**.
 
