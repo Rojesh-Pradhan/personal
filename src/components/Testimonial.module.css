@@ -1,0 +1,97 @@
+.section {
+  padding: 9rem 4rem;
+  background: #080808;
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '"';
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 30rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(201, 168, 76, 0.025);
+  line-height: 1;
+  pointer-events: none;
+  font-family: var(--font-display);
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.quotes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-top: 4rem;
+}
+
+.quote {
+  position: relative;
+  padding: 3rem;
+  border: 1px solid var(--gold-dim);
+  transition: border-color 0.4s, background 0.4s;
+}
+.quote:hover {
+  border-color: rgba(201, 168, 76, 0.45);
+  background: rgba(201, 168, 76, 0.02);
+}
+
+.quoteMark {
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.4;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+.text {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--paper);
+  margin-bottom: 2.5rem;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.authorLine {
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+.authorName {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.25rem;
+}
+
+.authorRole {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .section { padding: 5rem 1.5rem; }
+  .quotes { grid-template-columns: 1fr; gap: 2rem; }
+}

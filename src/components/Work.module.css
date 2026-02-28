@@ -1,0 +1,128 @@
+.work { padding: 8rem 4rem; background: var(--bg); }
+.grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; margin-top: 2px; }
+
+/* ── Wrapper holds the hover state — never moves ── */
+.cardWrap {
+  position: relative;
+  cursor: none;
+}
+.cardWrap.wide {
+  margin-bottom: 2px;
+}
+
+/* ── Card inner ── */
+.card {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+.cardWrap.wide .card { aspect-ratio: 21/8; }
+.cardWrap:hover .card { border-color: var(--border); }
+
+.cardBg {
+  position: absolute; inset: 0;
+  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  background: var(--bg2);
+}
+.cardWrap:hover .cardBg { transform: scale(1.03); }
+
+.bgGrid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border2) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.bgGlow { position: absolute; inset: 0; }
+
+.schemaSnippet {
+  position: absolute; top: 1.2rem; left: 1.2rem; right: 1.2rem; z-index: 5;
+  background: rgba(11,14,19,0.9); border: 1px solid var(--border);
+  padding: 0.7rem 1rem; border-radius: 4px;
+  font-family: var(--font-mono);
+  display: flex; flex-direction: column; gap: 0.25rem;
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity 0.35s, transform 0.35s;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+.schemaVisible { opacity: 1; transform: translateY(0); }
+.schemaComment { font-size: 0.58rem; color: var(--text-muted); }
+.schemaCode { font-size: 0.62rem; color: var(--blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.statsRow {
+  position: absolute; top: 1.2rem; right: 1.2rem; z-index: 4;
+  display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-end;
+  pointer-events: none;
+}
+.statChip {
+  font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.08em;
+  background: rgba(11,14,19,0.85); border: 1px solid var(--border);
+  padding: 0.2rem 0.5rem; backdrop-filter: blur(4px);
+}
+.statKey { color: var(--orange); }
+
+.overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(11,14,19,0.97) 0%, rgba(11,14,19,0.5) 55%, transparent 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.overlayVisible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+.tag {
+  font-family: var(--font-mono); font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--blue); border: 1px solid var(--blue-dim);
+  padding: 0.2rem 0.55rem; background: var(--blue-faint);
+}
+.desc {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--text-dim); line-height: 1.65; margin-bottom: 1rem;
+}
+.link {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; color: var(--orange);
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.linkArrow { transition: transform 0.3s; }
+.link:hover .linkArrow { transform: translateX(4px); }
+
+.label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(to top, rgba(11,14,19,0.9), transparent);
+  display: flex; align-items: flex-end; gap: 0.8rem;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.labelHidden { opacity: 0; }
+.labelNum {
+  font-family: var(--font-mono); font-size: 0.58rem;
+  letter-spacing: 0.18em; flex-shrink: 0;
+  line-height: 1; padding-bottom: 2px;
+}
+.title {
+  font-family: var(--font-display); font-size: 1.3rem;
+  font-weight: 600; line-height: 1.1; margin-bottom: 0.2rem;
+}
+.category {
+  font-family: var(--font-mono); font-size: 0.58rem;
+  letter-spacing: 0.1em; color: var(--text-muted);
+}
+.labelArrow { font-size: 1.1rem; margin-left: auto; flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  .work { padding: 5rem 1.5rem; }
+  .grid { grid-template-columns: 1fr; }
+  .cardWrap.wide .card { aspect-ratio: 4/3; }
+}
