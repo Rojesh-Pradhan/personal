@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './Work.module.css'
 import { useSectionReveal } from '../hooks/useReveal'
 
@@ -58,23 +58,63 @@ const projects = [
 ]
 
 function ProjectCard({ project: p, isWide }) {
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered]   = useState(false)
+  const [tilt, setTilt]         = useState({ x: 0, y: 0 })
+  const [schemaText, setSchema] = useState('')
+  const cardRef = useRef(null)
+  const schemaRef = useRef(null)
+
+  /* Tilt on mouse move */
+  const onMove = useCallback(e => {
+    const el = cardRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 8
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 8
+    setTilt({ x: -y, y: x })
+  }, [])
+
+  const onEnter = () => setHovered(true)
+  const onLeave = () => { setHovered(false); setTilt({ x: 0, y: 0 }) }
+
+  /* Typewriter on schema hover */
+  useEffect(() => {
+    if (!hovered) { setSchema(''); return }
+    let i = 0
+    const full = p.schema
+    schemaRef.current = setInterval(() => {
+      setSchema(full.slice(0, i + 1)); i++
+      if (i >= full.length) clearInterval(schemaRef.current)
+    }, 22)
+    return () => clearInterval(schemaRef.current)
+  }, [hovered, p.schema])
+
+  const tiltStyle = {
+    transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${hovered ? 1.015 : 1})`,
+    transition: hovered ? 'transform 0.1s ease' : 'transform 0.6s cubic-bezier(0.16,1,0.3,1)',
+  }
+
   return (
     <div
+      ref={cardRef}
       className={`${styles.card} ${isWide ? styles.wide : ''}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      style={tiltStyle}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      onMouseMove={onMove}
       data-cursor>
+
       <div className={styles.cardBg} style={{'--c': p.color}}>
         <div className={styles.bgGrid}/>
         <div className={styles.bgGlow} style={{
-          background: `radial-gradient(ellipse 60% 60% at 80% 20%, color-mix(in srgb, ${p.color} 12%, transparent), transparent)`
+          background: `radial-gradient(ellipse 60% 60% at 80% 20%, color-mix(in srgb, ${p.color} 14%, transparent), transparent)`
         }}/>
       </div>
 
+      {/* Schema typewriter */}
       <div className={`${styles.schemaSnippet} ${hovered ? styles.schemaVisible : ''}`}>
         <span className={styles.schemaComment}>-- {p.category}</span>
-        <span className={styles.schemaCode}>{p.schema}</span>
+        <span className={styles.schemaCode}>{schemaText}<span className={styles.schemaCursor}>▋</span></span>
       </div>
 
       <div className={styles.statsRow}>
@@ -82,16 +122,20 @@ function ProjectCard({ project: p, isWide }) {
         <span className={styles.statChip}><span className={styles.statKey}>sla:</span> {p.latency}</span>
       </div>
 
+      {/* Overlay with staggered tags */}
       <div className={`${styles.overlay} ${hovered ? styles.overlayVisible : ''}`}>
         <div className={styles.tags}>
-          {p.tags.map(t => <span key={t} className={styles.tag}>{t}</span>)}
+          {p.tags.map((t, i) => (
+            <span key={t} className={styles.tag} style={{ '--ti': i, '--c': p.color }}>{t}</span>
+          ))}
         </div>
         <p className={styles.desc}>{p.desc}</p>
-        <a href="#" className={styles.link}>
+        <a href="#" className={styles.link} style={{ '--c': p.color }}>
           view_project() <span className={styles.linkArrow}>→</span>
         </a>
       </div>
 
+      {/* Label */}
       <div className={`${styles.label} ${hovered ? styles.labelHidden : ''}`}>
         <span className={styles.labelNum} style={{color: p.color}}>{p.num}</span>
         <div>
@@ -100,6 +144,10 @@ function ProjectCard({ project: p, isWide }) {
         </div>
         <span className={styles.labelArrow} style={{color: p.color}}>↗</span>
       </div>
+
+      {/* Color accent bar */}
+      <div className={`${styles.accentBar} ${hovered ? styles.accentBarVisible : ''}`}
+           style={{'--c': p.color}}/>
     </div>
   )
 }
@@ -109,6 +157,7 @@ export default function Work() {
   useSectionReveal(ref)
   const wide = projects.filter(p => p.wide)
   const grid = projects.filter(p => !p.wide)
+
   return (
     <section className={styles.work} id="work" ref={ref}>
       <div className="section-label reveal">pipeline.projects</div>

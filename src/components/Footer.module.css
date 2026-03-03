@@ -13,7 +13,6 @@
   border-bottom: 1px solid var(--border);
 }
 
-/* Brand */
 .brand { display: flex; flex-direction: column; gap: 1rem; }
 
 .brandKw {
@@ -39,7 +38,6 @@
   max-width: 320px;
 }
 
-/* Nav */
 .nav {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -63,10 +61,10 @@
   letter-spacing: 0.06em;
   color: var(--text-muted);
   transition: color 0.2s, letter-spacing 0.2s;
+  padding: 0.2rem 0;
 }
 .navLink:hover { color: var(--blue); letter-spacing: 0.1em; }
 
-/* Bottom bar */
 .bottom {
   display: flex;
   align-items: center;
@@ -112,8 +110,26 @@
   50%      { opacity: 0.4; }
 }
 
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  .footer { padding: 3.5rem 2.5rem 2rem; }
+  .top { gap: 3rem; }
+}
+
+/* ── Mobile ── */
 @media (max-width: 900px) {
   .footer  { padding: 3rem 1.5rem 2rem; }
   .top     { grid-template-columns: 1fr; gap: 2.5rem; }
   .bottom  { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+}
+
+/* ── Small phones ── */
+@media (max-width: 480px) {
+  .footer { padding: 2.5rem 1.2rem 1.5rem; }
+  .top    { gap: 2rem; padding-bottom: 2rem; margin-bottom: 2rem; }
+  .nav    { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .brandKw, .brandName { font-size: 0.8rem; }
+  .navLink { font-size: 0.62rem; }
+  /* Make links easier to tap */
+  .navLink { padding: 0.35rem 0; }
 }
